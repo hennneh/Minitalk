@@ -1,6 +1,7 @@
 #include <unistd.h>
+#include <sys/types.h>
 
-void	ft_putnbr(int nbr)
+void	ft_putnbr(pid_t nbr)
 {
 	char	c;
 
@@ -12,7 +13,7 @@ void	ft_putnbr(int nbr)
 
 int	main(void)
 {
-	int	pid;
+	pid_t	pid;
 
 	pid = getpid();
 	ft_putnbr(pid);

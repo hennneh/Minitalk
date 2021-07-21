@@ -1,5 +1,6 @@
 #include <unistd.h>
 #include <stdio.h>
+#include <sys/types.h>
 
 int	ft_atoi(const char *nptr)
 {
@@ -28,11 +29,14 @@ int	ft_atoi(const char *nptr)
 
 int	main(int argc, char *argv[])
 {
-	int		pid;
+	pid_t	pid;
 	char	*msg;
 
 	if (argc > 1)
 		pid = ft_atoi(argv[1]);
+	if (argc > 2)
+		msg = argv[2];
 	printf("%d\n", pid);
+	printf("%s\n", msg);
 	return (0);
 }
