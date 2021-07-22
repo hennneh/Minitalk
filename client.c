@@ -38,5 +38,6 @@ int	main(int argc, char *argv[])
 		msg = argv[2];
 	printf("%d\n", pid);
 	printf("%s\n", msg);
+	kill(signal, SIGUSR1);
 	return (0);
 }
