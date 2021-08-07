@@ -4,15 +4,15 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-void	sighandler(int signum)
+void	sighandler()
 {
-	printf("caught signal %d...\n", signum);
+	printf("caught signal...\n");
 	exit (1);
 }
 
 int	main(void)
 {
-	printf("beginning");
+	printf("beginning\n");
 	signal(SIGINT, sighandler);
 
 	while(1)
