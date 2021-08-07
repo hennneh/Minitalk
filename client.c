@@ -1,6 +1,8 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <sys/types.h>
+#include <signal.h>
+#include <stdlib.h>
 
 int	ft_atoi(const char *nptr)
 {
@@ -38,5 +40,6 @@ int	main(int argc, char *argv[])
 		msg = argv[2];
 	printf("%d\n", pid);
 	printf("%s\n", msg);
+	kill(pid, SIGUSR1);
 	return (0);
 }
