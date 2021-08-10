@@ -4,6 +4,32 @@
 #include <signal.h>
 #include <stdlib.h>
 
+int	bin(int i)
+{
+	int j;
+	int	val;
+
+	val = 0;
+	j = 0;
+	if (i == 0 && j < 9)
+		val = val * 10 + i;
+	else if (i == 1 && j < 9)
+		val = val * 10 + i;
+	else
+		return (-1);
+	
+}
+
+void	one()
+{
+	bin(1);
+}
+
+void	zero()
+{
+	bin(0);
+}
+
 void	sighandler()
 {
 	printf("signal received, will terminate now...\n");
