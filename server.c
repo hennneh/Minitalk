@@ -48,10 +48,7 @@ void	ft_putnbr(pid_t nbr)
 
 int	main(void)
 {
-	pid_t	pid;
-
-	pid = getpid();
-	ft_putnbr(pid);
+	ft_putnbr(getpid());
 	write(1, "\n", 1);
 	while (1)
 	{
