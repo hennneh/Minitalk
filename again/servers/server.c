@@ -1,4 +1,4 @@
-#include "minitalk.h"
+#include "../includes/minitalk.h"
 
 void	handler(int sig, siginfo_t *siginfo, void *unused)
 {
