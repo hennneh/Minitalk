@@ -1,8 +1,8 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <sys/types.h>
-#include <signal.h>
 #include <stdlib.h>
+#include "minitalk.h"
 
 int	ft_atoi(const char *nptr)
 {
@@ -29,11 +29,16 @@ int	ft_atoi(const char *nptr)
 	return (num * sign);
 }
 
-int	main(int argc, char *argv[])
+int	main(int argc, char **argv)
 {
 	pid_t	pid;
 	char	*msg;
 
+	if (argc != 3)
+	{
+		ft_putstr_fd("Error\n", 1);
+		return (1);
+	}
 	if (argc > 1)
 		pid = ft_atoi(argv[1]);
 	if (argc > 2)

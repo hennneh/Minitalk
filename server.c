@@ -1,8 +1,8 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <stdio.h>
-#include <signal.h>
 #include <stdlib.h>
+#include "minitalk.h"
 
 int	bin(int i)
 {
@@ -17,7 +17,7 @@ int	bin(int i)
 		val = val * 10 + i;
 	else
 		return (-1);
-	
+	return (0);
 }
 
 void	one()
