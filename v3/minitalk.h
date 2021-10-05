@@ -3,15 +3,15 @@
 
 # include <signal.h>
 
-typedef struct	s_message
+typedef struct	s_msg
 {
 	char	c;
 	int		size;
-}			t_message;
+}			t_msg;
 
-typedef struct s_acknowledge
+typedef struct s_ack
 {
-	int	acknowledged;
-}			t_acknowledge;
+	int	acked;
+}			t_ack
 
 #endif
