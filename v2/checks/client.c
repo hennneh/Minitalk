@@ -2,7 +2,7 @@
 
 t_ack	g_ack;
 
-void	send(int pid, char *msg, size_t len)
+void	send_bit_by_bit(int pid, char *msg, size_t len)
 {
 	int		shift;
 	size_t	i;
@@ -28,27 +28,27 @@ void	send(int pid, char *msg, size_t len)
 
 void	get_ack(int sigbit, siginfo_t *siginfo, void *context)
 {
-	(void)	sigbit;
-	(void)	siginfo;
-	(void)	context;
+	(void) sigbit;
+	(void) siginfo;
+	(void) context;
 	g_ack.acked = 1;
 }
 
-int	main(int argc, char **argv)
+int	main(int ac, char **av)
 {
-	struct sigaction	sig;
 	int					pid;
+	struct sigaction	sig;
 
 	g_ack.acked = 1;
 	sig.sa_sigaction = &get_ack;
 	sig.sa_flags = SA_SIGINFO;
 	sigaction(SIGUSR1, &sig, NULL);
-	if (argc == 3)
+	if (ac == 3)
 	{
-		pid = ft_atoi(argv[1]);
-		send(pid, argv[2], ft_strlen(argv[2]));
+		pid = ft_atoi(av[1]);
+		send_bit_by_bit(pid, av[2], ft_strlen(av[2]));
 	}
 	else
-		ft_putstr("Wrong input!\n");
+		ft_putstr("wrong parameters try again\n");
 	return (0);
 }

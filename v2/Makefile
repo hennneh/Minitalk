@@ -1,18 +1,11 @@
-NAME1 = server
+all:
+	gcc -Wall -Wextra -Werror server.c utils.c -o server
+	gcc -Wall -Wextra -Werror client.c utils.c -o client
 
-NAME2 = client
-
-all :
-	make -C libft
-	gcc -Wall -Wextra -Werror server.c libft/libft.a -o $(NAME1)
-	gcc -Wall -Wextra -Werror client.c libft/libft.a -o $(NAME2)
-
-clean :
-	make clean -C libft 
+clean:
 	rm -rf client.o server.o
 
-fclean : clean
-	make fclean -C libft
-	rm -rf $(NAME1) $(NAME2)
+fclean: clean
+	rm -rf server client
 
-re : fclean all
+re: fclean all

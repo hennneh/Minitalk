@@ -1,9 +1,10 @@
 #include "minitalk.h"
 
-void	receive(int bit, siginfo_t *siginfo, void *context)
-{
+void	get_bit_by_bit(int bit, siginfo_t *siginfo, void *context)
+{	
 	static t_msg	msg;
 
+	(void) context;
 	if (bit == SIGUSR1)
 		msg.c += (0 << msg.size);
 	if (bit == SIGUSR2)
@@ -16,20 +17,19 @@ void	receive(int bit, siginfo_t *siginfo, void *context)
 		msg.size = 0;
 	}
 	kill(siginfo->si_pid, SIGUSR1);
-	(void) context;
 }
 
 int	main(void)
 {
 	struct sigaction	sig;
 
-	sig.sa_sigaction = &receive;
+	sig.sa_sigaction = &get_bit_by_bit;
 	sig.sa_flags = SA_SIGINFO;
 	sigaction(SIGUSR1, &sig, NULL);
 	sigaction(SIGUSR2, &sig, NULL);
-	ft_putstr("PID: ");
+	ft_putstr("Server pid : ");
 	ft_putnbr(getpid());
-	ft_putstr("\n");
+	ft_putchar('\n');
 	while (1)
 		pause();
 }
