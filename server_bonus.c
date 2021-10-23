@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client_bonus.c                                     :+:      :+:    :+:   */
+/*   server_bonus.c	                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hlehmann <hlehmann@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,57 +10,38 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "minitalk_bonus.h"
 
-t_ack	g_ack;
-
-void	send(int pid, char *msg, size_t len)
+void	receive(int bit, siginfo_t *siginfo, void *context)
 {
-	int		shift;
-	size_t	i;
+	static t_msg	msg;
 
-	i = 0;
-	while (i <= len)
+	if (bit == SIGUSR1)
+		msg.c += (0 << msg.size);
+	if (bit == SIGUSR2)
+		msg.c += (1 << msg.size);
+	msg.size++;
+	if (msg.size == 8)
 	{
-		shift = 0;
-		while (shift <= 7)
-		{
-			g_ack.acked = 0;
-			if ((msg[i] >> shift) & 1)
-				kill(pid, SIGUSR2);
-			else
-				kill(pid, SIGUSR1);
-			shift++;
-			while (g_ack.acked == 0)
-				pause();
-		}
-		i++;
+		ft_putchar(msg.c);
+		msg.c = 0;
+		msg.size = 0;
 	}
-}
-
-void	get_ack(int sigbit, siginfo_t *siginfo, void *context)
-{
-	(void) sigbit;
-	(void) siginfo;
+	kill(siginfo->si_pid, SIGUSR1);
 	(void) context;
-	g_ack.acked = 1;
 }
 
-int	main(int argc, char **argv)
+int	main(void)
 {
 	struct sigaction	sig;
-	int					pid;
 
-	g_ack.acked = 1;
-	sig.sa_sigaction = &get_ack;
+	sig.sa_sigaction = &receive;
 	sig.sa_flags = SA_SIGINFO;
 	sigaction(SIGUSR1, &sig, NULL);
-	if (argc == 3)
-	{
-		pid = ft_atoi(argv[1]);
-		send(pid, argv[2], ft_strlen(argv[2]));
-	}
-	else
-		ft_putstr("Wrong input!\n");
-	return (0);
+	sigaction(SIGUSR2, &sig, NULL);
+	ft_putstr("PID: ");
+	ft_putnbr(getpid());
+	ft_putstr("\n");
+	while (1)
+		pause();
 }
